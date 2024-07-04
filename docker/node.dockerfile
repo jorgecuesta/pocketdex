@@ -31,10 +31,11 @@ RUN yarn install
 ### NOTE: break-down vendor steps to be able to debug what is going wrong on CI
 RUN yarn run vendor:clean
 RUN if [ "$CI" = "true" ]; then yarn run vendor:clean-cache; else echo "Not in CI"; fi
-RUN yarn vendor:cosmjs:install
-RUN yarn vendor:subql:install
-RUN yarn vendor:cosmjs:build
-RUN yarn vendor:subql:build
+RUN yarn vendor:cosmjs:install && \
+    yarn vendor:cosmjs:build && \
+    yarn vendor:subql:install && \
+    yarn install && \
+    yarn vendor:subql:build
 
 # TODO_MAINNET(@jorgecuesta): Do a better use of copy to prevent copy everything which trigger a full build everytime.
 # Copy files
