@@ -1,6 +1,6 @@
 FROM node:22-slim AS builder
 
-ARG CI
+ARG CI=false
 ARG NODE_ENV=production
 ARG ENDPOINT
 ARG CHAIN_ID=poktroll
@@ -34,7 +34,6 @@ RUN if [ "$CI" = "true" ]; then yarn run vendor:clean-cache; else echo "Not in C
 RUN yarn vendor:cosmjs:install && \
     yarn vendor:cosmjs:build && \
     yarn vendor:subql:install && \
-    yarn install && \
     yarn vendor:subql:build
 
 # TODO_MAINNET(@jorgecuesta): Do a better use of copy to prevent copy everything which trigger a full build everytime.
