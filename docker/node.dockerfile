@@ -27,8 +27,12 @@ WORKDIR /app
 RUN yarn install
 
 ## Build forked vendor packages
+### NOTE: break-down vendor steps to be able to debug what is going wrong on CI
 RUN yarn run vendor:clean
-RUN yarn run vendor:setup
+RUN yarn vendor:cosmjs:install
+RUN yarn vendor:subql:install
+RUN yarn vendor:cosmjs:build
+RUN yarn vendor:subql:build
 
 # TODO_MAINNET(@jorgecuesta): Do a better use of copy to prevent copy everything which trigger a full build everytime.
 # Copy files
