@@ -18,7 +18,7 @@ jobs:
       - name: Setup Node.js environment
         uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: 18
 #          cache: 'yarn'
 #          cache-dependency-path: 'yarn.lock'
 
@@ -29,6 +29,10 @@ jobs:
         run: |
           yarn config set yarnPath .yarn/releases/yarn-3.8.0.cjs
           yarn config set pnpMode loose
+          yarn config set nodeLinker node-modules
+          yarn config set enableTelemetry false
+          yarn plugin import .yarn/plugins/@yarnpkg/plugin-workspace-tools.cjs
+          yarn plugin import .yarn/plugins/@yarnpkg/plugin-version.cjs
 
       # check if we have any issue on dependencies
       - name: Install dependencies
