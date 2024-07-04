@@ -25,6 +25,10 @@ jobs:
       - name: Install dependencies
         run: yarn
 
+      - name: Remove Yarn Cache
+        run: |
+          rm -rf vendor/cosmjs/.yarn/cache
+
       - name: Docker Setup Buildx
         uses: docker/setup-buildx-action@v3
 
