@@ -54,16 +54,16 @@ jobs:
 #        run: |
 #          rm -rf vendor/cosmjs/.yarn/cache
 
-#      - name: Docker Setup Buildx
-#        uses: docker/setup-buildx-action@v3
-#
+      - name: Docker Setup Buildx
+        uses: docker/setup-buildx-action@v3
+
       # production mode
       - name: Build Production
         uses: docker/build-push-action@v6
         with:
           file: docker/node.dockerfile
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
+#          cache-from: type=gha
+#          cache-to: type=gha,mode=max
           build-args: |
             NODE_ENV=production
             WATCH=false
