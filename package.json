@@ -13,6 +13,8 @@
     "vendor:subql:install": "cd vendor && yarn workspace @subql/node-cosmos install",
     "vendor:cosmjs:build": "cd vendor && yarn workspace cosmjs-monorepo-root run build",
     "vendor:subql:build": "cd vendor && yarn workspace @subql/node-cosmos run build",
+    "vendor:cosmjs:lint": "cd vendor && yarn workspace cosmjs-monorepo-root lint",
+    "vendor:subql:lint": "cd vendor && yarn workspace @subql/node-cosmos lint",
     "vendor:clean": "echo 'cleaning vendor modules' && cd vendor && find . -name node_modules | xargs rm -rf && find . -name dist | xargs rm -rf",
     "docker:build": "env sh ./scripts/dotenv-check.sh && docker compose build",
     "docker:build:no-cache": "env sh ./scripts/dotenv-check.sh && docker compose build --no-cache",
