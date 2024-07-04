@@ -1,5 +1,6 @@
 FROM node:22-slim AS builder
 
+ARG CI
 ARG NODE_ENV=production
 ARG ENDPOINT
 ARG CHAIN_ID=poktroll
