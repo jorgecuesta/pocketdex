@@ -29,7 +29,7 @@ RUN yarn install
 ## Build forked vendor packages
 ### NOTE: break-down vendor steps to be able to debug what is going wrong on CI
 RUN yarn run vendor:clean
-RUN cd vendor && yarn cache clean --all && cd cosmjs && yarn cache clean --all
+RUN if [ "$CI" = "true" ]; then yarn run vendor:clean-cache; else echo "Not in CI"; fi
 RUN yarn vendor:cosmjs:install
 RUN yarn vendor:subql:install
 RUN yarn vendor:cosmjs:build

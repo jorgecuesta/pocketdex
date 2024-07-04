@@ -65,6 +65,7 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
           build-args: |
+            CI=true
             NODE_ENV=production
             WATCH=false
             ENDPOINT=http://proxy:26657
