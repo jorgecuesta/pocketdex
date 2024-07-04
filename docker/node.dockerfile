@@ -37,7 +37,7 @@ COPY . /app
 # Run codegen and Build pocketdex
 RUN chmod +x scripts/prepare-docker-layers.sh && WATCH=$WATCH ./scripts/prepare-docker-layers.sh "builder"
 
-FROM node:22-alpine as runner
+FROM node:22-alpine AS runner
 
 # add group "app" and user "app"
 RUN addgroup -g 1001 app && adduser -D -h /home/app -u 1001 -G app app
