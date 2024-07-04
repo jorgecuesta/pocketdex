@@ -15,57 +15,48 @@ jobs:
           submodules: 'recursive'
           lfs: true
 
-      - name: Setup Node.js environment
-        uses: actions/setup-node@v4
-        with:
-          node-version: 18
+#      - name: Setup Node.js environment
+#        uses: actions/setup-node@v4
+#        with:
+#          node-version: 22
 #          cache: 'yarn'
 #          cache-dependency-path: 'yarn.lock'
-
-      - name: Yarn Version
-        run: yarn -v
-
-      - name: Setup .yarnrc.yml
-        run: |
-          yarn config set yarnPath .yarn/releases/yarn-3.8.0.cjs
-          yarn config set pnpMode loose
-          yarn config set nodeLinker node-modules
-          yarn config set enableTelemetry false
-          yarn plugin import .yarn/plugins/@yarnpkg/plugin-workspace-tools.cjs
-          yarn plugin import .yarn/plugins/@yarnpkg/plugin-version.cjs
-
-      # check if we have any issue on dependencies
-      - name: Install dependencies
-        run: yarn
-
+#
+#      # check if we have any issue on dependencies
+#      - name: Install dependencies
+#        run: yarn
+#
 #      - name: Clean Vendor Cache
 #        run: yarn vendor:clean-cache
+#
+#      - name: Clean Vendor Cache
+#        run: ls -la vendor/cosmjs/.yarn
+#
+#      - name: Install subql
+#        run: yarn vendor:subql:install
+#
+#      - name: Install cosmjs
+#        run: yarn vendor:cosmjs:install:ci
 
-      - name: Install subql
-        run: yarn vendor:subql:install
-
-      - name: Install cosmjs
-        run: yarn vendor:cosmjs:install:ci
-
-      - name: Lint subql
-        run: yarn vendor:subql:install
-
-      - name: Lint cosmjs
-        run: yarn vendor:cosmjs:install
-
-      - name: Build subql
-        run: yarn vendor:subql:build
-
-      - name: Build cosmjs
-        run: yarn vendor:cosmjs:build
+#      - name: Lint subql
+#        run: yarn vendor:subql:install
+#
+#      - name: Lint cosmjs
+#        run: yarn vendor:cosmjs:install
+#
+#      - name: Build subql
+#        run: yarn vendor:subql:build
+#
+#      - name: Build cosmjs
+#        run: yarn vendor:cosmjs:build
 
 #      - name: Remove Yarn Cache
 #        run: |
 #          rm -rf vendor/cosmjs/.yarn/cache
 
-      - name: Docker Setup Buildx
-        uses: docker/setup-buildx-action@v3
-
+#      - name: Docker Setup Buildx
+#        uses: docker/setup-buildx-action@v3
+#
       # production mode
       - name: Build Production
         uses: docker/build-push-action@v6
@@ -78,19 +69,19 @@ jobs:
             WATCH=false
             ENDPOINT=http://proxy:26657
             CHAIN_ID=poktroll
-
-      # develop mode
-      - name: Build Develop
-        uses: docker/build-push-action@v6
-        with:
-          file: docker/node.dockerfile
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
-          build-args: |
-            NODE_ENV=develop
-            WATCH=true
-            ENDPOINT=http://proxy:26657
-            CHAIN_ID=poktroll
+#
+#      # develop mode
+#      - name: Build Develop
+#        uses: docker/build-push-action@v6
+#        with:
+#          file: docker/node.dockerfile
+#          cache-from: type=gha
+#          cache-to: type=gha,mode=max
+#          build-args: |
+#            NODE_ENV=develop
+#            WATCH=true
+#            ENDPOINT=http://proxy:26657
+#            CHAIN_ID=poktroll
 
 #      - name: Install subql-node-cosmos
 #        run: yarn dlx @subql/node-cosmos
