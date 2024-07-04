@@ -11,6 +11,7 @@
     "vendor:setup": "echo 'installing and building vendor modules' && yarn vendor:cosmjs:install && yarn vendor:cosmjs:build && yarn vendor:subql:install && yarn install && yarn vendor:subql:build",
     "vendor:clean-cache": "cd vendor/cosmjs && yarn cache clean --all",
     "vendor:cosmjs:install": "cd vendor && yarn workspace cosmjs-monorepo-root install",
+    "vendor:cosmjs:install:ci": "cd vendor && yarn workspace cosmjs-monorepo-root install --immutable --immutable-cache --check-cache",
     "vendor:subql:install": "cd vendor && yarn workspace @subql/node-cosmos install",
     "vendor:cosmjs:build": "cd vendor && yarn workspace cosmjs-monorepo-root run build",
     "vendor:subql:build": "cd vendor && yarn workspace @subql/node-cosmos run build",

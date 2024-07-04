@@ -26,14 +26,14 @@ jobs:
       - name: Install dependencies
         run: yarn
 
-      - name: Clean Vendor Cache
-        run: yarn vendor:clean-cache
+#      - name: Clean Vendor Cache
+#        run: yarn vendor:clean-cache
 
       - name: Install subql
         run: yarn vendor:subql:install
 
       - name: Install cosmjs
-        run: yarn vendor:cosmjs:install
+        run: yarn vendor:cosmjs:install:ci
 
       - name: Lint subql
         run: yarn vendor:subql:install
