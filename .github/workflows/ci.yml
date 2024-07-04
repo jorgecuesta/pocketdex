@@ -28,12 +28,31 @@ jobs:
       - name: Docker Setup Buildx
         uses: docker/setup-buildx-action@v3
 
-      - name: Build and push Docker image
+      # production mode
+      - name: Build Production
         uses: docker/build-push-action@v6
         with:
           file: docker/node.dockerfile
           cache-from: type=gha
           cache-to: type=gha,mode=max
+          build-args: |
+            NODE_ENV=production
+            WATCH=false
+            ENDPOINT=http://proxy:26657
+            CHAIN_ID=poktroll
+
+      # develop mode
+      - name: Build Develop
+        uses: docker/build-push-action@v6
+        with:
+          file: docker/node.dockerfile
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          build-args: |
+            NODE_ENV=develop
+            WATCH=true
+            ENDPOINT=http://proxy:26657
+            CHAIN_ID=poktroll
 
 #      - name: Install subql-node-cosmos
 #        run: yarn dlx @subql/node-cosmos
