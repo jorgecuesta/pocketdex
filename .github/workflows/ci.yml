@@ -19,8 +19,16 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: 'yarn'
-          cache-dependency-path: 'yarn.lock'
+#          cache: 'yarn'
+#          cache-dependency-path: 'yarn.lock'
+
+      - name: Yarn Version
+        run: yarn -v
+
+      - name: Setup .yarnrc.yml
+        run: |
+          yarn config set yarnPath .yarn/releases/yarn-3.8.0.cjs
+          yarn config set pnpMode loose
 
       # check if we have any issue on dependencies
       - name: Install dependencies
