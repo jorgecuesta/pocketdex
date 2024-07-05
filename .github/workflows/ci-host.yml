@@ -1,8 +1,12 @@
-name: CI
+name: Host CI
 on:
   pull_request:
   push:
     branches: [ main ]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   ci:
@@ -15,7 +19,7 @@ jobs:
           submodules: 'recursive'
           lfs: true
 
-      - name: Setup Node.js environment
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 18
@@ -30,8 +34,8 @@ jobs:
           yarn config set pnpMode loose
           yarn config set nodeLinker node-modules
           yarn config set enableTelemetry false
-          yarn plugin import @yarnpkg/plugin-workspace-tools.cjs
-          yarn plugin import @yarnpkg/plugin-version.cjs
+          yarn plugin import @yarnpkg/plugin-workspace-tools
+          yarn plugin import @yarnpkg/plugin-version
 
       - name: Install dependencies
         run: yarn
