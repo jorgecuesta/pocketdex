@@ -62,6 +62,12 @@ jobs:
       - name: Build subql
         run: yarn vendor:subql:build
 
+      - name: Format
+        run: yarn run format:ci
+
+      - name: Lint
+        run: yarn run lint
+
       - name: Build & Codegen
         env:
           CHAIN_ID: poktroll
