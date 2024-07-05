@@ -8,6 +8,7 @@
     "build": "./scripts/build.sh",
     "prepack": "rm -rf dist && yarn run build",
     "test": "yarn run build && subql-node-cosmos test",
+    "test:ci": "node vendor/subql-cosmos/packages/node/bin/run test",
     "vendor:setup": "echo 'installing and building vendor modules' && yarn vendor:cosmjs:install && yarn vendor:cosmjs:build && yarn vendor:subql:install && yarn install && yarn vendor:subql:build",
     "vendor:clean-cache": "cd vendor && yarn cache clean --all && cd cosmjs && yarn cache clean --all",
     "vendor:cosmjs:install": "cd vendor && yarn workspace cosmjs-monorepo-root install",
