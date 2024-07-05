@@ -9,12 +9,23 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  draft:
+    name: 'Check Draft State'
+    if: ${{ github.event.pull_request.draft != true }}
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo ${{ github.event.pull_request.draft != true }}
+          echo "Pull Request is not draft, this workflow need continue."
+
   on-host:
-    name: 'CI on Host'
+    name: 'Host'
     uses: './.github/workflows/ci-host.yml'
+    needs: draft
     secrets: inherit
 
   on-docker:
-    name: 'CI on Docker'
+    name: 'Docker'
     uses: './.github/workflows/ci-docker.yml'
+    needs: draft
     secrets: inherit
