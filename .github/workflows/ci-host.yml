@@ -1,12 +1,6 @@
 name: Host CI
 on:
-  pull_request:
-  push:
-    branches: [ main ]
-
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
+  workflow_call:
 
 jobs:
   ci:
@@ -69,6 +63,8 @@ jobs:
         run: yarn vendor:subql:build
 
       - name: Build & Codegen
+        env:
+          CHAIN_ID: poktroll
         run: yarn build
 
       - name: Test

@@ -1,4 +1,4 @@
-name: Docker CI
+name: CI
 on:
   pull_request:
   push:
@@ -9,54 +9,12 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  ci:
-    name: Docker CI
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-        with:
-          submodules: 'recursive'
-          lfs: true
+  on-host:
+    name: 'CI on Host'
+    uses: './.github/workflows/ci-host.yml'
+    secrets: inherit
 
-      - name: Docker Setup Buildx
-        uses: docker/setup-buildx-action@v3
-
-      # production mode
-      - name: Build Production
-        uses: docker/build-push-action@v6
-        with:
-          file: docker/node.dockerfile
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
-          load: true
-          tags: "pocket-network/pocketdex:production"
-          build-args: |
-            CI=true
-            NODE_ENV=production
-            ENDPOINT=http://proxy:26657
-            CHAIN_ID=poktroll
-
-      # develop mode
-      - name: Build Develop
-        uses: docker/build-push-action@v6
-        with:
-          file: docker/node.dockerfile
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
-          load: true
-          tags: "pocket-network/pocketdex:test"
-          # NODE_ENV=test & NODE_ENV=development result on the same build image due to install dependencies.
-          build-args: |
-            CI=true
-            NODE_ENV=test
-            ENDPOINT=http://proxy:26657
-            CHAIN_ID=poktroll
-
-      - name: Run tests in Docker container
-        # TODO: remove this line when the test are fixed
-        # Right now there is an extraneous issue:
-        # Cause: Error: Cannot read properties of undefined (reading 'length')
-        continue-on-error: true
-        run: |
-          docker run --name testing pocket-network/pocketdex:test test
+  on-docker:
+    name: 'CI on Docker'
+    uses: './.github/workflows/ci-docker.yml'
+    secrets: inherit
