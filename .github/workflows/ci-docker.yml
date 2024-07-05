@@ -51,6 +51,9 @@ jobs:
         # TODO: remove this line when the test are fixed
         # Right now there is an extraneous issue:
         # Cause: Error: Cannot read properties of undefined (reading 'length')
+        env:
+          CHAIN_ID: poktroll
+          ENDPOINT: https://testnet-validated-validator-rpc.poktroll.com
         continue-on-error: true
         run: |
-          docker run --name testing pocket-network/pocketdex:test test
+          docker run --name testing -e CHAIN_ID -e ENDPOINT pocket-network/pocketdex:test test
